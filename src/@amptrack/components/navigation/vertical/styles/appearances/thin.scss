@@ -1,0 +1,97 @@
+/* Variables */
+:root {
+    --amptrack-vertical-navigation-thin-width: 80px;
+}
+
+amptrack-vertical-navigation {
+    /* Thin appearance overrides */
+    &.amptrack-vertical-navigation-appearance-thin {
+        width: var(--amptrack-vertical-navigation-thin-width);
+        min-width: var(--amptrack-vertical-navigation-thin-width);
+        max-width: var(--amptrack-vertical-navigation-thin-width);
+
+        /* Left positioned */
+        &.amptrack-vertical-navigation-position-left {
+            &.amptrack-vertical-navigation-mode-side {
+                margin-left: calc(
+                    var(--amptrack-vertical-navigation-thin-width) * -1
+                );
+            }
+
+            &.amptrack-vertical-navigation-opened {
+                margin-left: 0;
+            }
+        }
+
+        /* Right positioned */
+        &.amptrack-vertical-navigation-position-right {
+            &.amptrack-vertical-navigation-mode-side {
+                margin-right: calc(
+                    var(--amptrack-vertical-navigation-thin-width) * -1
+                );
+            }
+
+            &.amptrack-vertical-navigation-opened {
+                margin-right: 0;
+            }
+
+            .amptrack-vertical-navigation-aside-wrapper {
+                left: auto;
+                right: var(--amptrack-vertical-navigation-thin-width);
+            }
+        }
+
+        /* Wrapper */
+        .amptrack-vertical-navigation-wrapper {
+            /* Content */
+            .amptrack-vertical-navigation-content {
+                > amptrack-vertical-navigation-aside-item,
+                > amptrack-vertical-navigation-basic-item {
+                    flex-direction: column;
+                    justify-content: center;
+                    height: 64px;
+                    min-height: 64px;
+                    max-height: 64px;
+                    padding: 0 16px;
+
+                    .amptrack-vertical-navigation-item-wrapper {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .amptrack-vertical-navigation-item {
+                            justify-content: center;
+                            padding: 12px;
+                            border-radius: 4px;
+
+                            .amptrack-vertical-navigation-item-icon {
+                                margin: 0;
+                            }
+
+                            .amptrack-vertical-navigation-item-arrow,
+                            .amptrack-vertical-navigation-item-badge-content,
+                            .amptrack-vertical-navigation-item-title-wrapper {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+
+                > amptrack-vertical-navigation-collapsable-item {
+                    display: none;
+                }
+
+                > amptrack-vertical-navigation-group-item {
+                    > .amptrack-vertical-navigation-item-wrapper {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        /* Aside wrapper */
+        .amptrack-vertical-navigation-aside-wrapper {
+            left: var(--amptrack-vertical-navigation-thin-width);
+        }
+    }
+}

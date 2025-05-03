@@ -1,0 +1,127 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Principal -->
+    <div class="flex flex-auto flex-col items-center p-6 sm:p-10">
+        <div class="flex w-full max-w-4xl flex-col">
+            <div class="-ml-4 sm:mt-8">
+                <a mat-button [routerLink]="['../']" [color]="'primary'">
+                    <mat-icon
+                        [svgIcon]="'heroicons_outline:arrow-long-left'"
+                    ></mat-icon>
+                    <span class="ml-2">Regresar al menú</span>
+                </a>
+            </div>
+            <div
+                class="mt-2 text-4xl font-extrabold leading-tight tracking-tight sm:text-7xl"
+            >
+                Contactar a soporte
+            </div>
+            <!-- Formulario -->
+            <div
+                class="bg-card mt-8 rounded-2xl p-6 pb-7 shadow sm:mt-12 sm:p-10 sm:pb-7"
+            >
+                <!-- Alerta -->
+                @if (alert) {
+                    <amptrack-alert
+                        class="mb-8"
+                        [type]="alert.type"
+                        [showIcon]="false"
+                    >
+                        {{ alert.message }}
+                    </amptrack-alert>
+                }
+                <form
+                    class="space-y-3"
+                    [formGroup]="supportForm"
+                    #supportNgForm="ngForm"
+                >
+                    <div class="mb-6">
+                        <div class="text-2xl font-bold tracking-tight">
+                            Envía tu solicitud
+                        </div>
+                        <div class="text-secondary">
+                            Su solicitud será procesada y nuestro equipo de soporte se pondrá en contacto con usted en 24 horas.
+                        </div>
+                    </div>
+                    <!-- Nombre -->
+                    <mat-form-field class="w-full">
+                        <input
+                            matInput
+                            [formControlName]="'name'"
+                            [required]="true"
+                        />
+                        <mat-label>Nombre</mat-label>
+                        @if (supportForm.get('name').hasError('required')) {
+                            <mat-error> Información requerida </mat-error>
+                        }
+                    </mat-form-field>
+                    <!-- Correo -->
+                    <mat-form-field class="w-full">
+                        <input
+                            type="email"
+                            matInput
+                            [formControlName]="'email'"
+                            [required]="true"
+                        />
+                        <mat-label>Correo electrónico</mat-label>
+                        @if (supportForm.get('email').hasError('required')) {
+                            <mat-error> Información requerida </mat-error>
+                        }
+                        @if (supportForm.get('email').hasError('email')) {
+                            <mat-error> Ingrese una dirección de correo electrónico válida </mat-error>
+                        }
+                    </mat-form-field>
+                    <!-- Asunto -->
+                    <mat-form-field class="w-full">
+                        <input
+                            matInput
+                            [formControlName]="'subject'"
+                            [required]="true"
+                        />
+                        <mat-label>Asunto</mat-label>
+                        @if (supportForm.get('subject').hasError('required')) {
+                            <mat-error> Información requerida </mat-error>
+                        }
+                    </mat-form-field>
+                    <!-- Mensaje -->
+                    <mat-form-field class="w-full">
+                        <textarea
+                            matInput
+                            [formControlName]="'message'"
+                            [required]="true"
+                            [rows]="5"
+                            cdkTextareaAutosize
+                        ></textarea>
+                        <mat-label>Mensaje</mat-label>
+                        @if (supportForm.get('message').hasError('required')) {
+                            <mat-error> Información requerida </mat-error>
+                        }
+                    </mat-form-field>
+                    <!-- Acciones -->
+                    <div class="flex items-center justify-end">
+                        <button
+                            mat-button
+                            [color]="'accent'"
+                            [disabled]="
+                                supportForm.pristine || supportForm.untouched
+                            "
+                            (click)="clearForm()"
+                        >
+                            Limpiar campos
+                        </button>
+                        <button
+                            class="ml-2"
+                            mat-flat-button
+                            [color]="'primary'"
+                            [disabled]="
+                                supportForm.pristine || supportForm.invalid
+                            "
+                            (click)="sendForm()"
+                        >
+                            Enviar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+@if (!dismissible || (dismissible && !dismissed)) {
+    <div
+        class="amptrack-alert-container"
+        [@fadeIn]="!dismissed"
+        [@fadeOut]="!dismissed"
+    >
+
+        @if (appearance === 'border') {
+            <div class="amptrack-alert-border"></div>
+        }
+
+        @if (showIcon) {
+            <div class="amptrack-alert-icon">
+                <div class="amptrack-alert-custom-icon">
+                    <ng-content select="[amptrackAlertIcon]"></ng-content>
+                </div>
+
+                <div class="amptrack-alert-default-icon">
+                    @if (type === 'primary') {
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:check-circle'"
+                        ></mat-icon>
+                    }
+
+                    @if (type === 'accent') {
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:check-circle'"
+                        ></mat-icon>
+                    }
+
+                    @if (type === 'warn') {
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:x-circle'"
+                        ></mat-icon>
+                    }
+
+                    @if (type === 'basic') {
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:check-circle'"
+                        ></mat-icon>
+                    }
+
+                    @if (type === 'info') {
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:information-circle'"
+                        ></mat-icon>
+                    }
+
+                    @if (type === 'success') {
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:check-circle'"
+                        ></mat-icon>
+                    }
+
+                    @if (type === 'warning') {
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:exclamation-triangle'"
+                        ></mat-icon>
+                    }
+
+                    @if (type === 'error') {
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:x-circle'"
+                        ></mat-icon>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="amptrack-alert-content">
+            <div class="amptrack-alert-title">
+                <ng-content select="[amptrackAlertTitle]"></ng-content>
+            </div>
+
+            <div class="amptrack-alert-message">
+                <ng-content></ng-content>
+            </div>
+        </div>
+
+        <button
+            class="amptrack-alert-dismiss-button"
+            mat-icon-button
+            (click)="dismiss()"
+        >
+            <mat-icon [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
+        </button>
+    </div>
+}

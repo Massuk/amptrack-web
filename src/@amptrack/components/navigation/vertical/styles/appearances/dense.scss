@@ -1,0 +1,196 @@
+/* Variables */
+:root {
+    --amptrack-vertical-navigation-width: 280px;
+    --amptrack-vertical-navigation-dense-width: 80px;
+}
+
+amptrack-vertical-navigation {
+    /* Dense appearance overrides */
+    &.amptrack-vertical-navigation-appearance-dense {
+        &:not(.amptrack-vertical-navigation-mode-over) {
+            width: var(--amptrack-vertical-navigation-dense-width);
+            min-width: var(--amptrack-vertical-navigation-dense-width);
+            max-width: var(--amptrack-vertical-navigation-dense-width);
+
+            /* Left positioned */
+            &.amptrack-vertical-navigation-position-left {
+                /* Side mode */
+                &.amptrack-vertical-navigation-mode-side {
+                    margin-left: calc(
+                        var(--amptrack-vertical-navigation-dense-width) * -1
+                    );
+                }
+
+                /* Opened */
+                &.amptrack-vertical-navigation-opened {
+                    margin-left: 0;
+                }
+            }
+
+            /* Right positioned */
+            &.amptrack-vertical-navigation-position-right {
+                /* Side mode */
+                &.amptrack-vertical-navigation-mode-side {
+                    margin-right: calc(
+                        var(--amptrack-vertical-navigation-dense-width) * -1
+                    );
+                }
+
+                /* Opened */
+                &.amptrack-vertical-navigation-opened {
+                    margin-right: 0;
+                }
+
+                /* Aside wrapper */
+                .amptrack-vertical-navigation-aside-wrapper {
+                    left: auto;
+                    right: var(--amptrack-vertical-navigation-dense-width);
+                }
+
+                &.amptrack-vertical-navigation-hover {
+                    .amptrack-vertical-navigation-aside-wrapper {
+                        left: auto;
+                        right: var(--amptrack-vertical-navigation-width);
+                    }
+                }
+            }
+        }
+
+        /* Wrapper */
+        .amptrack-vertical-navigation-wrapper {
+            /* Content */
+            .amptrack-vertical-navigation-content {
+                amptrack-vertical-navigation-aside-item,
+                amptrack-vertical-navigation-basic-item,
+                amptrack-vertical-navigation-collapsable-item,
+                amptrack-vertical-navigation-group-item {
+                    .amptrack-vertical-navigation-item-wrapper {
+                        .amptrack-vertical-navigation-item {
+                            width: calc(
+                                var(--amptrack-vertical-navigation-dense-width) -
+                                    24px
+                            );
+                            min-width: calc(
+                                var(--amptrack-vertical-navigation-dense-width) -
+                                    24px
+                            );
+                            max-width: calc(
+                                var(--amptrack-vertical-navigation-dense-width) -
+                                    24px
+                            );
+
+                            .amptrack-vertical-navigation-item-arrow,
+                            .amptrack-vertical-navigation-item-badge,
+                            .amptrack-vertical-navigation-item-title-wrapper {
+                                transition: opacity 400ms
+                                    cubic-bezier(0.25, 0.8, 0.25, 1);
+                            }
+                        }
+                    }
+                }
+
+                amptrack-vertical-navigation-group-item {
+                    &:first-of-type {
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
+
+        &:not(.amptrack-vertical-navigation-hover):not(
+                .amptrack-vertical-navigation-mode-over
+            ) {
+            /* Wrapper */
+            .amptrack-vertical-navigation-wrapper {
+                /* Content */
+                .amptrack-vertical-navigation-content {
+                    .amptrack-vertical-navigation-item-wrapper {
+                        .amptrack-vertical-navigation-item {
+                            padding: 10px 16px;
+
+                            .amptrack-vertical-navigation-item-arrow,
+                            .amptrack-vertical-navigation-item-badge,
+                            .amptrack-vertical-navigation-item-title-wrapper {
+                                white-space: nowrap;
+                                opacity: 0;
+                            }
+                        }
+                    }
+
+                    amptrack-vertical-navigation-collapsable-item {
+                        .amptrack-vertical-navigation-item-children {
+                            display: none;
+                        }
+                    }
+
+                    amptrack-vertical-navigation-group-item {
+                        > .amptrack-vertical-navigation-item-wrapper {
+                            .amptrack-vertical-navigation-item {
+                                &:before {
+                                    content: '';
+                                    position: absolute;
+                                    top: 20px;
+                                    width: 23px;
+                                    border-top-width: 2px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /* Aside wrapper */
+        .amptrack-vertical-navigation-aside-wrapper {
+            left: var(--amptrack-vertical-navigation-dense-width);
+        }
+
+        /* Hover */
+        &.amptrack-vertical-navigation-hover {
+            .amptrack-vertical-navigation-wrapper {
+                width: var(--amptrack-vertical-navigation-width);
+
+                .amptrack-vertical-navigation-content {
+                    .amptrack-vertical-navigation-item-wrapper {
+                        .amptrack-vertical-navigation-item {
+                            width: calc(
+                                var(--amptrack-vertical-navigation-width) - 24px
+                            );
+                            min-width: calc(
+                                var(--amptrack-vertical-navigation-width) - 24px
+                            );
+                            max-width: calc(
+                                var(--amptrack-vertical-navigation-width) - 24px
+                            );
+
+                            .amptrack-vertical-navigation-item-arrow,
+                            .amptrack-vertical-navigation-item-badge,
+                            .amptrack-vertical-navigation-item-title-wrapper {
+                                white-space: nowrap;
+                                animation: removeWhiteSpaceNoWrap 1ms linear
+                                    350ms;
+                                animation-fill-mode: forwards;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .amptrack-vertical-navigation-aside-wrapper {
+                left: var(--amptrack-vertical-navigation-width);
+            }
+        }
+    }
+}
+
+@keyframes removeWhiteSpaceNoWrap {
+    0% {
+        white-space: nowrap;
+    }
+    99% {
+        white-space: nowrap;
+    }
+    100% {
+        white-space: normal;
+    }
+}

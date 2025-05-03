@@ -1,0 +1,563 @@
+<!-- BLOQUE 1: Mostrar formulario si NO hay suministro seleccionado -->
+<div *ngIf="!selectedSupply" class="flex min-w-0 flex-auto flex-col">
+    <!-- Header bonito -->
+    <div
+        class="dark relative overflow-hidden bg-gray-800 px-4 pb-28 pt-8 dark:bg-gray-900 sm:px-16 sm:pb-48 sm:pt-20"
+    >
+        <!-- Background SVG decorativo -->
+        <svg
+            class="pointer-events-none absolute inset-0"
+            viewBox="0 0 960 540"
+            width="100%"
+            height="100%"
+            preserveAspectRatio="xMidYMax slice"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g
+                class="text-gray-700 opacity-25"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="100"
+            >
+                <circle r="234" cx="196" cy="23"></circle>
+                <circle r="234" cx="790" cy="491"></circle>
+            </g>
+        </svg>
+
+        <!-- Texto principal -->
+        <div class="relative z-10 flex flex-col items-center">
+            <h2 class="text-xl font-semibold">ANALÍTICA</h2>
+            <div
+                class="mt-1 text-center text-4xl font-extrabold leading-tight tracking-tight sm:text-7xl"
+            >
+                Evalúa patrones y predice consumos
+            </div>
+            <div
+                class="text-secondary mt-3 text-center tracking-tight sm:text-2xl"
+            >
+                El número de suministro nos permite conocer detalles del consumo
+                de los sistemas eléctricos y aplicar inteligencia de negocios.
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de búsqueda -->
+    <div class="relative z-20 -mt-16 flex justify-center">
+        <div
+            class="bg-card flex w-full max-w-md flex-col items-center rounded-2xl p-8 shadow-lg"
+        >
+            <div class="flex w-full flex-col space-y-4">
+                <div class="flex flex-col">
+                    <label class="text-sm font-medium"
+                        >Código de suministro</label
+                    >
+                    <input
+                        [(ngModel)]="codigoSuministro"
+                        placeholder="Ej: 1201846"
+                        class="mt-1 w-full rounded-md border px-3 py-2 text-sm focus:outline-none"
+                    />
+                </div>
+                <button
+                    mat-flat-button
+                    color="primary"
+                    (click)="searchSupply()"
+                >
+                    Buscar
+                </button>
+
+                <!-- Si hay más de una empresa para escoger -->
+                <div *ngIf="supplies.length > 1" class="mt-6 w-full">
+                    <label class="mb-1 block text-sm font-medium"
+                        >Selecciona empresa asociada</label
+                    >
+                    <mat-form-field appearance="fill" class="w-full">
+                        <mat-select
+                            placeholder="Seleccionar"
+                            [(ngModel)]="selectedSupply"
+                            (selectionChange)="onSelectSupply($event.value)"
+                        >
+                            <mat-option *ngFor="let s of supplies" [value]="s">
+                                {{ s.razon_social }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de confianza de marcas -->
+<div class="bg-transparent py-8 sm:py-16">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Enel_Group_logo.svg/1200px-Enel_Group_logo.svg.png" alt="ENEL" />
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://www.luzdelsur.com.pe/misconexiones/public/custom/images/logo_horizontal.png" alt="Luz del Sur" />
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://servicios.distriluz.com.pe/SIGLOGEXT/Content/Images/logo-distriluz-png.png" alt="Distriluz" />
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://www.fonafe.gob.pe/pw_content/empresas/30/Img/Logo%20Sea%202l%20RGB.PNG?1697953170" alt="SEAL" />
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://www.fonafe.gob.pe/pw_content/empresas/35/Img/Electro%20norte%20-%20ensa.png?1131448600" alt="ENSA" />
+            <!-- Segunda fila -->
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://www.electrodunas.com/MesaPartes/Content/images/logotransparente.png" alt="Electrodunas" />
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://www.else.com.pe/publicaciontransparencia/logo.gif" alt="Electro Sur Este" />
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://www.fonafe.gob.pe/pw_content/empresas/38/Img/Hidrandina.png?758477681" alt="Hidrandina" />
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://www.fonafe.gob.pe/pw_content/empresas/32/Img/LOGOS-ELECTRO-UCAYALI-PNG.png?1451769866" alt="Electro Ucayali" />
+            <img class="col-span-1 max-h-12 w-full object-contain grayscale opacity-40" src="https://www.fonafe.gob.pe/pw_content/empresas/13/Img/Adinelsa.png?1247390750" alt="Adinelsa" />
+            <!-- Agrega más logos si quieres -->
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!-- BLOQUE 2: Mostrar todo lo demás si YA hay un suministro seleccionado -->
+<div *ngIf="selectedSupply" class="flex w-full flex-auto flex-col">
+    <div class="flex w-full flex-auto flex-col">
+        <div class="mx-auto flex w-full max-w-screen-xl flex-wrap p-6 md:p-8">
+            <!-- Title and action buttons -->
+            <div class="flex w-full items-center justify-between">
+                <div>
+                    <div
+                        class="text-3xl font-semibold leading-8 tracking-tight"
+                    >
+                        Consumos y predicciones
+                    </div>
+                    <div class="text-secondary font-medium tracking-tight">
+                        Monitorea las tendencias de consumos, compara periodos y
+                        marca observaciones
+                    </div>
+                </div>
+                <div class="ml-6 flex items-center">
+                    <button
+                        mat-stroked-button
+                        color="gray"
+                        (click)="resetSelectedSupply()"
+                    >
+                        <mat-icon
+                            class="mr-2"
+                            [svgIcon]="'heroicons_mini:chevron-left'"
+                        ></mat-icon>
+                        Seleccionar otro suministro
+                    </button>
+                    <button
+                        class="ml-3 hidden sm:inline-flex"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:arrow-up-tray'"
+                        ></mat-icon>
+                        <span class="ml-2">Exportar PDF</span>
+                    </button>
+
+                    <!-- Actions menu (visible on xs) -->
+                    <div class="sm:hidden">
+                        <button
+                            [matMenuTriggerFor]="actionsMenu"
+                            mat-icon-button
+                        >
+                            <mat-icon
+                                [svgIcon]="
+                                    'heroicons_outline:ellipsis-vertical'
+                                "
+                            ></mat-icon>
+                        </button>
+                        <mat-menu #actionsMenu="matMenu">
+                            <button mat-menu-item>Exportar</button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="mt-8 grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+            >
+                <!-- Datos del suministro -->
+                <div
+                    class="bg-card relative flex flex-auto flex-col overflow-hidden rounded-2xl p-6 pb-3 pr-3 shadow sm:col-span-2 lg:col-span-2"
+                >
+                    <div class="absolute bottom-0 right-0 -m-6 h-24 w-24">
+                        <mat-icon
+                            class="text-blue-500 opacity-25 icon-size-24 dark:text-blue-400"
+                            [svgIcon]="
+                                'heroicons_outline:document-magnifying-glass'
+                            "
+                        ></mat-icon>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex flex-col">
+                            <div
+                                class="truncate text-lg font-medium leading-6 tracking-tight"
+                            >
+                                Datos del suministro
+                                <strong>{{ selectedSupply?.cod }}</strong>
+                            </div>
+                            <div class="text-sm font-medium text-green-600">
+                                Información actualizada al
+                                {{ queryDate | date: 'longDate' }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-mx-6 mt-4 flex flex-row flex-wrap">
+                        <div class="mx-6 my-3 flex flex-col">
+                            <div
+                                class="text-secondary text-sm font-medium leading-none"
+                            >
+                                Empresa asociada
+                            </div>
+                            <div class="mt-2 text-3xl font-medium leading-none">
+                                {{ selectedSupply?.razon_social }}
+                            </div>
+                        </div>
+                        <div class="mx-6 my-3 flex flex-col">
+                            <div
+                                class="text-secondary text-sm font-medium leading-none"
+                            >
+                                Sistema eléctrico
+                            </div>
+                            <div class="mt-2 text-3xl font-medium leading-none">
+                                {{ selectedSupply?.cod_sist }}
+                            </div>
+                        </div>
+                        <div class="mx-6 my-3 flex flex-col">
+                            <div
+                                class="text-secondary text-sm font-medium leading-none"
+                            >
+                                Subestación
+                            </div>
+                            <div class="mt-2 text-3xl font-medium leading-none">
+                                {{ selectedSupply?.sed }}
+                            </div>
+                        </div>
+                        <div class="mx-6 my-3 flex flex-col">
+                            <div
+                                class="text-secondary text-sm font-medium leading-none"
+                            >
+                                Tarifa
+                            </div>
+                            <div class="mt-2 text-3xl font-medium leading-none">
+                                De 1 a 30 kW.h
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Predicción con XGBoost -->
+                <div
+                    class="bg-card relative flex flex-auto flex-col overflow-hidden rounded-2xl p-6 pb-3 pr-3 shadow sm:col-span-2 lg:col-span-1"
+                >
+                    <div
+                        class="pointer-events-none absolute bottom-0 right-0 z-0 -m-6 h-24 w-24"
+                    >
+                        <mat-icon
+                            class="text-yellow-500 opacity-25 icon-size-24 dark:text-yellow-400"
+                            [svgIcon]="'heroicons_outline:bolt'"
+                        ></mat-icon>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex flex-col">
+                            <div
+                                class="truncate text-lg font-medium leading-6 tracking-tight"
+                            >
+                                Predice el consumo con AmpTrack
+                            </div>
+                            <div class="text-sm font-medium text-green-600">
+                                Usando el modelo XGBoost
+                            </div>
+                        </div>
+                        <div class="-mt-2 ml-auto" *ngIf="fechaPredicha">
+                            <button
+                                mat-icon-button
+                                (click)="resetXGBoostCard()"
+                                matTooltip="Predecir de nuevo"
+                            >
+                                <mat-icon
+                                    class="text-gray-600 icon-size-5"
+                                    [svgIcon]="'heroicons_mini:arrow-path'"
+                                ></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-end space-x-3">
+                        <div class="flex flex-col">
+                            <label
+                                for="monthPicker"
+                                class="text-secondary mb-3 text-sm font-medium leading-none"
+                            >
+                                Ingresa la fecha
+                            </label>
+                            <input
+                                *ngIf="!fechaPredicha"
+                                id="monthPicker"
+                                type="month"
+                                [(ngModel)]="fechaSeleccionada"
+                                class="h-8 w-36 rounded-md border px-2 text-sm font-medium focus:outline-none"
+                                [ngClass]="{
+                                    'border-gray-300 focus:border-blue-500':
+                                        !showError,
+                                    'border-red-500 focus:border-red-500':
+                                        showError,
+                                }"
+                            />
+                            <div
+                                *ngIf="fechaPredicha"
+                                class="text-3xl font-medium leading-none"
+                            >
+                                {{ predictedConsumptionXGB }} kW.h
+                            </div>
+                        </div>
+                        <button
+                            *ngIf="!fechaPredicha"
+                            type="button"
+                            class="font-regular z-10 flex items-center rounded-full bg-indigo-600 px-4 py-1.5 text-sm text-white shadow-sm transition hover:bg-indigo-700"
+                            (click)="predictConsumption()"
+                        >
+                            <mat-icon
+                                class="mr-2 text-white icon-size-4"
+                                [svgIcon]="'heroicons_solid:cpu-chip'"
+                            ></mat-icon>
+                            Predecir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modelo predictivo -->
+                <div
+                    class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow sm:col-span-2 lg:col-span-3"
+                >
+                    <div
+                        class="ml-10 mr-6 mt-10 flex items-center justify-between sm:mr-10"
+                    >
+                        <div class="flex flex-col">
+                            <div
+                                class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl"
+                            >
+                                Comportamiento de los consumos
+                            </div>
+                            <div class="text-secondary font-medium">
+                                Registros de consumos mensuales usando el modelo
+                                ARIMA
+                            </div>
+                        </div>
+                        <!-- <div class="ml-2">
+                            <mat-button-toggle-group
+                                class="hidden space-x-1 border-none sm:inline-flex"
+                                value="this-year"
+                                #visitorsYearSelector="matButtonToggleGroup"
+                            >
+                                <mat-button-toggle
+                                    class="overflow-hidden rounded-full border-none px-1.5 font-medium"
+                                    value="last-year"
+                                    >Último año
+                                </mat-button-toggle>
+                                <mat-button-toggle
+                                    class="overflow-hidden rounded-full border-none px-1.5 font-medium"
+                                    value="this-year"
+                                    >Este año
+                                </mat-button-toggle>
+                            </mat-button-toggle-group>
+                            <div class="sm:hidden">
+                                <button
+                                    mat-icon-button
+                                    [matMenuTriggerFor]="visitorsMenu"
+                                >
+                                    <mat-icon
+                                        [svgIcon]="
+                                            'heroicons_outline:ellipsis-vertical'
+                                        "
+                                    ></mat-icon>
+                                </button>
+                                <mat-menu #visitorsMenu="matMenu">
+                                    <button mat-menu-item>Este año</button>
+                                    <button mat-menu-item>Último año</button>
+                                </mat-menu>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div
+                        class="flex h-80 flex-auto flex-col"
+                        *ngIf="chartConsumptions"
+                    >
+                        <apx-chart
+                            class="h-full w-full flex-auto"
+                            [chart]="chartConsumptions.chart"
+                            [colors]="chartConsumptions.colors"
+                            [dataLabels]="chartConsumptions.dataLabels"
+                            [fill]="chartConsumptions.fill"
+                            [grid]="chartConsumptions.grid"
+                            [legend]="chartConsumptions.legend"
+                            [series]="chartConsumptions.series"
+                            [stroke]="chartConsumptions.stroke"
+                            [tooltip]="chartConsumptions.tooltip"
+                            [xaxis]="chartConsumptions.xaxis"
+                            [yaxis]="chartConsumptions.yaxis"
+                            (dataPointSelection)="onDataPointSelected($event)"
+                        ></apx-chart>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vista filtrada (ESTO AUN NO ESTA IMPLEMENTADO, IGNORAR) -->
+            <div
+                class="bg-card mt-8 flex flex-auto flex-col overflow-hidden rounded-2xl shadow"
+            >
+                <div class="m-6 mb-0 flex items-start justify-between">
+                    <div
+                        class="truncate text-lg font-medium leading-6 tracking-tight"
+                    >
+                        Vista filtrada
+                    </div>
+                    <div class="ml-2">
+                        <button
+                            class="bg-hover h-6 min-h-6 rounded-full px-2"
+                            mat-button
+                            [matMenuTriggerFor]="conversionMenu"
+                        >
+                            <span class="text-secondary text-sm font-medium"
+                                >30 días</span
+                            >
+                        </button>
+                        <mat-menu #conversionMenu="matMenu">
+                            <button mat-menu-item>30 días</button>
+                            <button mat-menu-item>3 meses</button>
+                            <button mat-menu-item>9 meses</button>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div class="mx-6 mt-6 flex items-start">
+                    <div
+                        class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-12"
+                    >
+                        <div class="flex flex-col">
+                            <div class="flex items-center">
+                                <div
+                                    class="text-secondary font-medium leading-5"
+                                >
+                                    Puntuación general
+                                </div>
+                                <mat-icon
+                                    class="text-hint ml-1.5 icon-size-4"
+                                    [svgIcon]="
+                                        'heroicons_mini:information-circle'
+                                    "
+                                    [matTooltip]="
+                                        'Score is calculated by using the historical ratio between Page Views and Visitors. Best score is 1000, worst score is 0.'
+                                    "
+                                ></mat-icon>
+                            </div>
+                            <div class="mt-2 flex items-start">
+                                <div
+                                    class="text-4xl font-bold leading-none tracking-tight"
+                                >
+                                    12
+                                </div>
+                                <div class="ml-2 flex items-center">
+                                    <mat-icon
+                                        class="text-green-500 icon-size-5"
+                                        [svgIcon]="
+                                            'heroicons_solid:arrow-up-circle'
+                                        "
+                                    ></mat-icon>
+                                    <div
+                                        class="ml-1 text-md font-medium text-green-500"
+                                    >
+                                        42.9%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex items-center">
+                                <div
+                                    class="text-secondary font-medium leading-5"
+                                >
+                                    Proporción promedio
+                                </div>
+                                <mat-icon
+                                    class="text-hint ml-1.5 icon-size-4"
+                                    [svgIcon]="
+                                        'heroicons_mini:information-circle'
+                                    "
+                                    [matTooltip]="
+                                        'Average Ratio is the average ratio between Page Views and Visitors'
+                                    "
+                                ></mat-icon>
+                            </div>
+                            <div class="mt-2 flex items-start">
+                                <div
+                                    class="text-4xl font-bold leading-none tracking-tight"
+                                >
+                                    13%
+                                </div>
+                                <div class="ml-2 flex items-center">
+                                    <mat-icon
+                                        class="text-red-500 icon-size-5"
+                                        [svgIcon]="
+                                            'heroicons_solid:arrow-down-circle'
+                                        "
+                                    ></mat-icon>
+                                    <div
+                                        class="ml-1 text-md font-medium text-red-500"
+                                    >
+                                        13.1%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex items-center">
+                                <div
+                                    class="text-secondary font-medium leading-5"
+                                >
+                                    Relación prevista
+                                </div>
+                                <mat-icon
+                                    class="text-hint ml-1.5 icon-size-4"
+                                    [svgIcon]="
+                                        'heroicons_mini:information-circle'
+                                    "
+                                    [matTooltip]="
+                                        'Predicted Ratio is calculated by using historical ratio, current trends and your goal targets.'
+                                    "
+                                ></mat-icon>
+                            </div>
+                            <div class="mt-2 flex items-start">
+                                <div
+                                    class="text-4xl font-bold leading-none tracking-tight"
+                                >
+                                    2%
+                                </div>
+                                <div class="ml-2 flex items-center">
+                                    <mat-icon
+                                        class="text-green-500 icon-size-5"
+                                        [svgIcon]="
+                                            'heroicons_solid:arrow-up-circle'
+                                        "
+                                    ></mat-icon>
+                                    <div
+                                        class="ml-1 text-md font-medium text-green-500"
+                                    >
+                                        22.2%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 flex h-80 flex-auto flex-col">
+                    <!-- <apx-chart
+                        class="h-full w-full flex-auto"
+                        [chart]="chartConsumptionsVsPageViews.chart"
+                        [colors]="chartConsumptionsVsPageViews.colors"
+                        [dataLabels]="chartConsumptionsVsPageViews.dataLabels"
+                        [grid]="chartConsumptionsVsPageViews.grid"
+                        [legend]="chartConsumptionsVsPageViews.legend"
+                        [series]="chartConsumptionsVsPageViews.series"
+                        [stroke]="chartConsumptionsVsPageViews.stroke"
+                        [tooltip]="chartConsumptionsVsPageViews.tooltip"
+                        [xaxis]="chartConsumptionsVsPageViews.xaxis"
+                        [yaxis]="chartConsumptionsVsPageViews.yaxis"
+                    ></apx-chart> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+<div
+    class="amptrack-vertical-navigation-item-wrapper"
+    [class.amptrack-vertical-navigation-item-has-subtitle]="!!item.subtitle"
+    [ngClass]="item.classes?.wrapper"
+>
+    <div
+        class="amptrack-vertical-navigation-item"
+        [ngClass]="{ 'amptrack-vertical-navigation-item-disabled': item.disabled }"
+        [matTooltip]="item.tooltip || ''"
+        (click)="toggleCollapsable()"
+    >
+        @if (item.icon) {
+            <mat-icon
+                class="amptrack-vertical-navigation-item-icon"
+                [ngClass]="item.classes?.icon"
+                [svgIcon]="item.icon"
+            ></mat-icon>
+        }
+        <div class="amptrack-vertical-navigation-item-title-wrapper">
+            <div class="amptrack-vertical-navigation-item-title">
+                <span [ngClass]="item.classes?.title">
+                    {{ item.title }}
+                </span>
+            </div>
+            @if (item.subtitle) {
+                <div class="amptrack-vertical-navigation-item-subtitle">
+                    <span [ngClass]="item.classes?.subtitle">
+                        {{ item.subtitle }}
+                    </span>
+                </div>
+            }
+        </div>
+        @if (item.badge) {
+            <div class="amptrack-vertical-navigation-item-badge">
+                <div
+                    class="amptrack-vertical-navigation-item-badge-content"
+                    [ngClass]="item.badge.classes"
+                >
+                    {{ item.badge.title }}
+                </div>
+            </div>
+        }
+        <mat-icon
+            class="amptrack-vertical-navigation-item-arrow icon-size-4"
+            [svgIcon]="'heroicons_solid:chevron-right'"
+        ></mat-icon>
+    </div>
+</div>
+
+@if (!isCollapsed) {
+    <div class="amptrack-vertical-navigation-item-children" @expandCollapse>
+        @for (item of item.children; track trackByFn($index, item)) {
+            @if ((item.hidden && !item.hidden(item)) || !item.hidden) {
+                @if (item.type === 'basic') {
+                    <amptrack-vertical-navigation-basic-item
+                        [item]="item"
+                        [name]="name"
+                    ></amptrack-vertical-navigation-basic-item>
+                }
+                @if (item.type === 'collapsable') {
+                    <amptrack-vertical-navigation-collapsable-item
+                        [item]="item"
+                        [name]="name"
+                        [autoCollapse]="autoCollapse"
+                    ></amptrack-vertical-navigation-collapsable-item>
+                }
+
+                @if (item.type === 'divider') {
+                    <amptrack-vertical-navigation-divider-item
+                        [item]="item"
+                        [name]="name"
+                    ></amptrack-vertical-navigation-divider-item>
+                }
+
+                @if (item.type === 'group') {
+                    <amptrack-vertical-navigation-group-item
+                        [item]="item"
+                        [name]="name"
+                    ></amptrack-vertical-navigation-group-item>
+                }
+
+                @if (item.type === 'spacer') {
+                    <amptrack-vertical-navigation-spacer-item
+                        [item]="item"
+                        [name]="name"
+                    ></amptrack-vertical-navigation-spacer-item>
+                }
+            }
+        }
+    </div>
+}

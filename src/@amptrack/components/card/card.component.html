@@ -1,0 +1,19 @@
+@if (flippable) {
+    <div class="amptrack-card-front">
+        <ng-content select="[amptrackCardFront]"></ng-content>
+    </div>
+
+    <div class="amptrack-card-back">
+        <ng-content select="[amptrackCardBack]"></ng-content>
+    </div>
+}
+
+@if (!flippable) {
+    <ng-content></ng-content>
+
+    @if (expanded) {
+        <div class="amptrack-card-expansion" [@expandCollapse]>
+            <ng-content select="[amptrackCardExpansion]"></ng-content>
+        </div>
+    }
+}

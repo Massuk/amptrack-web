@@ -1,0 +1,33 @@
+<div class="amptrack-horizontal-navigation-wrapper">
+    @for (item of navigation; track trackByFn($index, item)) {
+        @if ((item.hidden && !item.hidden(item)) || !item.hidden) {
+            @if (item.type === 'basic') {
+                <amptrack-horizontal-navigation-basic-item
+                    class="amptrack-horizontal-navigation-menu-item"
+                    [item]="item"
+                    [name]="name"
+                ></amptrack-horizontal-navigation-basic-item>
+            }
+
+            @if (
+                item.type === 'aside' ||
+                item.type === 'collapsable' ||
+                item.type === 'group'
+            ) {
+                <amptrack-horizontal-navigation-branch-item
+                    class="amptrack-horizontal-navigation-menu-item"
+                    [item]="item"
+                    [name]="name"
+                ></amptrack-horizontal-navigation-branch-item>
+            }
+
+            @if (item.type === 'spacer') {
+                <amptrack-horizontal-navigation-spacer-item
+                    class="amptrack-horizontal-navigation-menu-item"
+                    [item]="item"
+                    [name]="name"
+                ></amptrack-horizontal-navigation-spacer-item>
+            }
+        }
+    }
+</div>

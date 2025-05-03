@@ -1,0 +1,158 @@
+amptrack-horizontal-navigation {
+    .amptrack-horizontal-navigation-wrapper {
+        display: flex;
+        align-items: center;
+
+        amptrack-horizontal-navigation-basic-item,
+        amptrack-horizontal-navigation-branch-item {
+            @screen sm {
+                &:hover {
+                    .amptrack-horizontal-navigation-item-wrapper {
+                        @apply bg-hover;
+                    }
+                }
+            }
+
+            .amptrack-horizontal-navigation-item-wrapper {
+                border-radius: 4px;
+                overflow: hidden;
+
+                .amptrack-horizontal-navigation-item {
+                    padding: 0 16px;
+                    cursor: pointer;
+                    user-select: none;
+
+                    .amptrack-horizontal-navigation-item-icon {
+                        margin-right: 12px;
+                    }
+                }
+            }
+        }
+
+        amptrack-horizontal-navigation-basic-item {
+            .amptrack-horizontal-navigation-item-active,
+            .amptrack-horizontal-navigation-item-active-forced {
+                .amptrack-horizontal-navigation-item-title {
+                    @apply text-primary #{'!important'};
+                }
+
+                .amptrack-horizontal-navigation-item-subtitle {
+                    @apply text-primary-400 #{'!important'};
+
+                    .dark & {
+                        @apply text-primary-600 #{'!important'};
+                    }
+                }
+
+                .amptrack-horizontal-navigation-item-icon {
+                    @apply text-primary #{'!important'};
+                }
+            }
+        }
+
+        /* Branch - When menu open */
+        amptrack-horizontal-navigation-branch-item {
+            .amptrack-horizontal-navigation-menu-active,
+            .amptrack-horizontal-navigation-menu-active-forced {
+                .amptrack-horizontal-navigation-item-wrapper {
+                    @apply bg-hover;
+                }
+            }
+        }
+
+        /* Spacer */
+        amptrack-horizontal-navigation-spacer-item {
+            margin: 12px 0;
+        }
+    }
+}
+
+.amptrack-horizontal-navigation-menu-panel {
+    .amptrack-horizontal-navigation-menu-item {
+        height: auto;
+        min-height: 0;
+        line-height: normal;
+        white-space: normal;
+
+        amptrack-horizontal-navigation-basic-item,
+        amptrack-horizontal-navigation-branch-item,
+        amptrack-horizontal-navigation-divider-item {
+            display: flex;
+            flex: 1 1 auto;
+        }
+
+        amptrack-horizontal-navigation-divider-item {
+            margin: 8px -16px;
+
+            .amptrack-horizontal-navigation-item-wrapper {
+                height: 1px;
+                box-shadow: 0 1px 0 0;
+            }
+        }
+    }
+}
+
+.amptrack-horizontal-navigation-menu-item {
+    amptrack-horizontal-navigation-basic-item {
+        .amptrack-horizontal-navigation-item-active,
+        .amptrack-horizontal-navigation-item-active-forced {
+            .amptrack-horizontal-navigation-item-title {
+                @apply text-primary #{'!important'};
+            }
+
+            .amptrack-horizontal-navigation-item-subtitle {
+                @apply text-primary-400 #{'!important'};
+
+                .dark & {
+                    @apply text-primary-600 #{'!important'};
+                }
+            }
+
+            .amptrack-horizontal-navigation-item-icon {
+                @apply text-primary #{'!important'};
+            }
+        }
+    }
+
+    .amptrack-horizontal-navigation-item-wrapper {
+        width: 100%;
+
+        &.amptrack-horizontal-navigation-item-has-subtitle {
+            .amptrack-horizontal-navigation-item {
+                min-height: 56px;
+            }
+        }
+
+        .amptrack-horizontal-navigation-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 48px;
+            width: 100%;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+
+            .amptrack-horizontal-navigation-item-title-wrapper {
+                .amptrack-horizontal-navigation-item-subtitle {
+                    font-size: 12px;
+                }
+            }
+
+            .amptrack-horizontal-navigation-item-badge {
+                margin-left: auto;
+
+                .amptrack-horizontal-navigation-item-badge-content {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 10px;
+                    font-weight: 600;
+                    white-space: nowrap;
+                    height: 20px;
+                }
+            }
+        }
+    }
+}
